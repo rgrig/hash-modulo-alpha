@@ -34,7 +34,7 @@ dumb2 env (App _ e1 e2) = App (33*33*3 + 33 * h1 + h2) f1 f2
 
 dumb :: Hashable v => Expr h v -> Expr Int v
 dumb (Var _ v) = Var 1 v
-dumb (Lam _ v e) = Lam (33*33*2 + 33*hash v +h) v f
+dumb (Lam _ v e) = Lam (33*33*2 + 33*1 +h) v f
     where
         f = dumb e
         h = Expr.annotation f
