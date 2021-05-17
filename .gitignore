@@ -1,0 +1,9 @@
+*.gnuplot
+*.dat
+*.pdf
+/hash
+/compiler
+/config
+/elaborated-plan
+/improved-plan*.tar.gz
+/benchmarks*
