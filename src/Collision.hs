@@ -8,6 +8,7 @@ import qualified Hash
 import qualified Benchmark
 import Expr
 import qualified AlphaHashOptimizedHash16Bit
+import qualified Rg
 
 import Data.Hashable (Hashable)
 import Data.List (intercalate)
@@ -24,6 +25,9 @@ genNotAlphaEquiv gen = do
   if Hash.alphaEquivalentAccordingToUniquifyBinders expr1 expr2
     then genNotAlphaEquiv gen
     else pure (expr1, expr2)
+
+--hashToTest = AlphaHashOptimizedHash16Bit.alphaHash
+hashToTest = Rg.noninc16
 
 countCollisions :: (Int -> IO (Expr () Int, Expr () Int)) -> Int -> Int -> IO Double
 countCollisions generate numNodes numBigIters = do
@@ -42,8 +46,8 @@ countCollisions generate numNodes numBigIters = do
 
     (expr1 :: Expr () Int, expr2 :: Expr () Int) <- generate numNodes
 
-    let h1 = annotation (AlphaHashOptimizedHash16Bit.alphaHash expr1)
-        h2 = annotation (AlphaHashOptimizedHash16Bit.alphaHash expr2)
+    let h1 = annotation (hashToTest expr1)
+        h2 = annotation (hashToTest expr2)
         collisionCount' =
           if h1 == h2
           then collisionCount + 1

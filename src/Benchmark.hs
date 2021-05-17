@@ -20,6 +20,7 @@ import Hash (deBruijnHash, structuralHashNested)
 import qualified Hash
 import qualified AlphaHashOptimizedHash
 import AlphaHashEfficientHash (Hash)
+import qualified Rg
 
 data BenchmarkParams = BenchmarkParams
   { runsToMinimizeOver :: Int
@@ -39,6 +40,7 @@ data Algorithms a = Algorithms
   , aAlphaHashFromPaperFaster :: a
   , aDeBrujinHash           :: a
   , aStructuralHashNested   :: a
+  , aNonincremental :: a
   }
   deriving (Functor, Foldable, Traversable)
 
@@ -50,6 +52,7 @@ algorithms_ = Algorithms
   , aAlphaHashFromPaperFaster = ("Ours", AlphaHashOptimizedHash.alphaHash, good)
   , aDeBrujinHash           = ("DeBruijn*", deBruijnHash, prettyBad)
   , aStructuralHashNested   = ("Structural*", structuralHashNested, veryBad)
+  , aNonincremental = ("Nonincremental", Rg.noninc, "pink")
   }
   where
       veryBad   = "red"
